@@ -1,5 +1,8 @@
+package dev.is_a.abhay7.supertext;
+
 import java.awt.Color;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -31,7 +34,7 @@ public class Notepad {
 	private Boolean isDark = false;
 	private Boolean isLineWrap = false;
 	
-	public Notepad(){
+	public Notepad() {
 		setUpGui();
 	}
 	
@@ -43,7 +46,7 @@ public class Notepad {
 		
 		private JMenu[] menuItems;
 		
-		public MenuBar(){
+		public MenuBar() {
 			menuItems = new JMenu[5];
 			
 			menuItems[0] = new JMenu("File"); 
@@ -60,8 +63,8 @@ public class Notepad {
 			fileItems[2] = new JMenuItem("Save");
 			fileItems[2].addActionListener(new SaveListener());
 			fileItems[3] = new JMenuItem("Exit");
-			fileItems[3].addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
+			fileItems[3].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					int a = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit? All unsaved work will be lost.");
 					if(a == JOptionPane.YES_OPTION)
 						System.exit(0);
@@ -69,21 +72,21 @@ public class Notepad {
 			});
 			
 			JMenuItem date = new JMenuItem("Date");
-			date.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
+			date.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					text.append("\n" + timeNow()+ "\n");
 				}
 			});
 			
 			JMenuItem[] formatItems = new JMenuItem[2];
 			formatItems[0] = new JMenuItem("Line wrap text");
-			formatItems[0].addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-					if(!isLineWrap){
+			formatItems[0].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(!isLineWrap) {
 						text.setLineWrap(true);
 						scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 						formatItems[0].setText("Stop line wrapping");
-					}else{
+					} else {
 						text.setLineWrap(false);
 						scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 						formatItems[0].setText("Line wrap text");
@@ -92,8 +95,8 @@ public class Notepad {
 				}
 			});
 			formatItems[1] = new JMenuItem("Font");
-			formatItems[1].addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
+			formatItems[1].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					JFontChooser font = new JFontChooser();
 					font.showDialog(frame);
 					text.setFont(font.getSelectedFont());
@@ -105,45 +108,45 @@ public class Notepad {
 			viewItems[0].addActionListener(new ThemeListener());
 			
 			JMenuItem about = new JMenuItem("About SuperText");
-			about.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
+			about.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					 JOptionPane.showMessageDialog(frame, 
-							 "                          SuperText is a notepad created by Abhay Bhat\n The code for the Font Chooser was found at https://stackoverflow.com/a/7528129");
+							 "                          SuperText is a notepad created by Abhay\n The code for the Font Chooser was found at https://stackoverflow.com/a/7528129");
 				}
 			});
 			
 			
-			for(int i = 0; i < fileItems.length;i++){
+			for(int i = 0; i < fileItems.length;i++) {
 				menuItems[0].add(fileItems[i]);
 			}
 			
 			menuItems[1].add(date);
 			
-			for(int i = 0; i< formatItems.length;i++){
+			for(int i = 0; i< formatItems.length;i++) {
 				menuItems[2].add(formatItems[i]);
 			}
 			
-			for(int i = 0; i < viewItems.length;i++){
+			for(int i = 0; i < viewItems.length;i++) {
 				menuItems[3].add(viewItems[i]);
 			}
 			
 			menuItems[4].add(about);
 			
-			for(int i = 0; i < menuItems.length;i++){
+			for(int i = 0; i < menuItems.length;i++) {
 				this.add(menuItems[i]);
 			}
 						
 		}
 
 	    public void setColor(Color color) {
-	        bgColor=color;
+	        bgColor = color;
 	    }
 	    
-	    public Color getColor(){
+	    public Color getColor() {
 	    	return bgColor;
 	    }
 
-	    public JMenu[] getMenuItems(){
+	    public JMenu[] getMenuItems() {
 	    	return menuItems;
 	    }
 	    
@@ -165,6 +168,7 @@ public class Notepad {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		text = new JTextArea();
+		text.setFont(new Font("Verdana", Font.PLAIN, 15));
 		
 		scroller = new JScrollPane(text);
 		text.setLineWrap(false);
@@ -185,7 +189,7 @@ public class Notepad {
 		
 	}
 	
-	class NewListener implements ActionListener{
+	class NewListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
 			int a = JOptionPane.showConfirmDialog(frame, "Are you sure you want to continue? All unsaved work will be lost.");
@@ -195,34 +199,34 @@ public class Notepad {
 		
 	}
 	
-	class OpenListener implements ActionListener{
+	class OpenListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			int a = JOptionPane.showConfirmDialog(frame, "Are you sure you want to continue? All unsaved work will be lost.");
 			if(a != JOptionPane.YES_OPTION)
 				return;
 			text.setText("");
-			FileDialog fileDialog = new FileDialog(frame,"Select file");
+			FileDialog fileDialog = new FileDialog(frame, "Select file");
 			fileDialog.setVisible(true);
-			try{
+			try {
 				
 				File f = new File(fileDialog.getDirectory() + fileDialog.getFile());
 				if(fileDialog.getFile() == null)
 					return;
 				Scanner s = new Scanner(f);
-				while(s.hasNextLine()){
+				while(s.hasNextLine()) {
 					text.append(s.nextLine() + "\n");
 				}
 				s.close();
-			}catch(Exception e){
-				e.printStackTrace();
+			} catch(Exception e) {
+				JOptionPane.showMessageDialog(frame, "Error Opening File: " + e.getMessage(), "Inane error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 			
 	}
 	
-	class SaveListener implements ActionListener{
-		public void actionPerformed(ActionEvent ev){
-			try{
+	class SaveListener implements ActionListener {
+		public void actionPerformed(ActionEvent ev) {
+			try {
 				FileDialog fd = new FileDialog(frame, "Select directory");
 				fd.setVisible(true);
 				
@@ -232,32 +236,34 @@ public class Notepad {
 				
 				FileWriter fw = new FileWriter(f);
 				
-				for(int i = 0; i < tokens.length;i++){
+				for(int i = 0; i < tokens.length;i++) {
 					fw.write(tokens[i] + "\n");
 				}
 				
 				fw.close();
 				
-			}catch(Exception e){
-				
+			} catch(Exception e) {
+				JOptionPane.showMessageDialog(frame, "Error Save File: " + e.getMessage(), "Inane error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 	
-	class ThemeListener implements ActionListener{
+	class ThemeListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			JMenuItem it = (JMenuItem)e.getSource();
-			if(!isDark){
+			JMenuItem it = (JMenuItem) e.getSource();
+			if(!isDark) {
 				text.setForeground(Color.WHITE);
+				text.setCaretColor(Color.WHITE);
 				text.setBackground(Color.DARK_GRAY);
 				it.setText("Light Theme");
-				topMenu.setColor(Color.black);
-			}else{
-				text.setForeground(Color.DARK_GRAY);
+				topMenu.setColor(Color.LIGHT_GRAY);
+			} else {
+				text.setForeground(Color.BLACK);
+				text.setCaretColor(Color.BLACK);
 				text.setBackground(Color.WHITE);
 				it.setText("Dark Theme");
-				topMenu.setColor(Color.white);
+				topMenu.setColor(Color.WHITE);
 			}
 			isDark = !isDark;
 			topMenu.repaint();
@@ -265,9 +271,9 @@ public class Notepad {
 		
 	}
 	
-	private String timeNow(){
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
-	    LocalDateTime now = LocalDateTime.now().minusHours(7);
+	private String timeNow() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		LocalDateTime now = LocalDateTime.now().minusHours(7);
 		LocalTime time = LocalTime.now();  
 		return dtf.format(now) + ": "+ time;  
 	}
