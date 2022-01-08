@@ -1,5 +1,3 @@
-package dev.is_a.abhay7.supertext;
-
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Font;
